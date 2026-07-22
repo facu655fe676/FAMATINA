@@ -38,10 +38,6 @@ if (cursor && cursorR) {
 const loader = document.getElementById('loader');
 if (loader) {
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      const ldSol = document.getElementById('ld-sol');
-      if (ldSol) ldSol.classList.add('visible');
-    }, 650);
     setTimeout(() => loader.classList.add('gone'), 1200);
   });
 }
