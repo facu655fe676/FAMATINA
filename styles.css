@@ -89,10 +89,25 @@ body::after {
   transition:opacity .9s ease, visibility .9s ease;
 }
 #loader.gone { opacity:0; visibility:hidden; pointer-events:none; }
+/* Sol behind loader text */
+.ld-sol {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:none; z-index:0;
+  opacity:0; transition:opacity .9s ease;
+}
+.ld-sol.visible { opacity:1; }
+.ld-sol img {
+  width:min(420px,62vw); height:auto;
+  object-fit:contain;
+  opacity:.22;
+  filter:drop-shadow(0 0 50px rgba(200,169,110,.5));
+}
 .ld-logo {
   font-family:var(--f-display);
   font-size:clamp(1.8rem,5vw,3.5rem);
   letter-spacing:.55em; color:var(--c-gold);
+  position:relative; z-index:1;
 }
 /* Left-to-right letter reveal */
 .lr-letter {
@@ -128,36 +143,28 @@ body::after {
 @keyframes lineGrow { from{width:0} to{width:200px} }
 @keyframes barFill  { from{width:0} to{width:100%} }
 
-/* Hero sol overlay */
-.hero-sol {
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  z-index:1; pointer-events:none;
-  opacity:0; transition:opacity 1.4s ease .2s;
+/* Logo image in nav — shows actual logo on a clean white badge */
+.nav-logo:has(.nav-logo-img) {
+  background:rgba(255,255,255,.93);
+  padding:3px 8px;
+  border-radius:2px;
+  letter-spacing:0;
+  transition:background .3s, padding .3s;
 }
-.hero-sol.visible { opacity:1; }
-.hero-sol img {
-  width:min(480px,50vw); height:auto;
-  object-fit:contain;
-  opacity:.18;
-  filter:drop-shadow(0 0 50px rgba(200,169,110,.4));
+.nav-logo:hover:has(.nav-logo-img) {
+  background:rgba(255,255,255,1);
 }
-
-/* Logo image in nav and footer */
 .nav-logo-img {
-  height:46px; width:auto;
+  height:44px; width:auto;
   object-fit:contain;
-  filter:brightness(0) invert(1);
-  opacity:.88; transition:opacity .3s;
+  display:block;
 }
-.nav-logo:hover .nav-logo-img { opacity:1; }
 
+/* Logo in footer */
 .ft-logo-img {
-  height:68px; width:auto;
+  height:78px; width:auto;
   object-fit:contain;
   display:block; margin-bottom:1.5rem;
-  filter:brightness(0) invert(1);
-  opacity:.72;
 }
 
 /* ════════════════════════════════

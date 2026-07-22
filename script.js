@@ -39,10 +39,10 @@ const loader = document.getElementById('loader');
 if (loader) {
   window.addEventListener('load', () => {
     setTimeout(() => {
-      loader.classList.add('gone');
-      const heroSol = document.getElementById('hero-sol');
-      if (heroSol) heroSol.classList.add('visible');
-    }, 1200);
+      const ldSol = document.getElementById('ld-sol');
+      if (ldSol) ldSol.classList.add('visible');
+    }, 650);
+    setTimeout(() => loader.classList.add('gone'), 1200);
   });
 }
 
