@@ -98,16 +98,43 @@ body::after {
 }
 .ld-sol.visible { opacity:1; }
 .ld-sol img {
-  width:min(420px,62vw); height:auto;
-  object-fit:contain;
-  opacity:.22;
-  filter:drop-shadow(0 0 50px rgba(200,169,110,.5));
+  /* !important overrides the global img{width:100%;height:100%} */
+  width:380px !important;
+  max-width:58vw !important;
+  height:auto !important;
+  object-fit:contain !important;
+  opacity:.2;
+  filter:drop-shadow(0 0 60px rgba(200,169,110,.6));
 }
+/* All loader text content sits above the sol */
 .ld-logo {
   font-family:var(--f-display);
   font-size:clamp(1.8rem,5vw,3.5rem);
   letter-spacing:.55em; color:var(--c-gold);
-  position:relative; z-index:1;
+  position:relative; z-index:5;
+}
+.ld-line {
+  width:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--c-gold),transparent);
+  margin-top:1.2rem;
+  position:relative; z-index:5;
+  animation:lineGrow .9s .3s var(--ease-out) forwards;
+}
+.ld-sub {
+  font-size:.6rem; font-weight:200; letter-spacing:.55em;
+  text-transform:uppercase; color:var(--c-gray);
+  margin-top:1rem; opacity:0;
+  position:relative; z-index:5;
+  animation:fadeUp .5s .7s ease forwards;
+}
+.ld-bar {
+  position:absolute; bottom:2.5rem; z-index:5;
+  width:120px; height:1px; background:var(--c-mid); overflow:hidden;
+}
+.ld-bar::after {
+  content:''; position:absolute; left:0; top:0; height:100%;
+  background:var(--c-gold);
+  animation:barFill 1s .1s var(--ease-out) forwards;
 }
 /* Left-to-right letter reveal */
 .lr-letter {
@@ -117,53 +144,23 @@ body::after {
   animation:lrReveal .35s var(--ease-out) forwards;
 }
 @keyframes lrReveal { to { opacity:1; transform:translateX(0); } }
-
-.ld-line {
-  width:0; height:1px;
-  background:linear-gradient(90deg,transparent,var(--c-gold),transparent);
-  margin-top:1.2rem;
-  animation:lineGrow .9s .3s var(--ease-out) forwards;
-}
-.ld-sub {
-  font-size:.6rem; font-weight:200; letter-spacing:.55em;
-  text-transform:uppercase; color:var(--c-gray);
-  margin-top:1rem; opacity:0;
-  animation:fadeUp .5s .7s ease forwards;
-}
-.ld-bar {
-  position:absolute; bottom:2.5rem;
-  width:120px; height:1px; background:var(--c-mid); overflow:hidden;
-}
-.ld-bar::after {
-  content:''; position:absolute; left:0; top:0; height:100%;
-  background:var(--c-gold);
-  animation:barFill 1s .1s var(--ease-out) forwards;
-}
 @keyframes fadeUp   { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 @keyframes lineGrow { from{width:0} to{width:200px} }
 @keyframes barFill  { from{width:0} to{width:100%} }
 
-/* Logo image in nav — shows actual logo on a clean white badge */
-.nav-logo:has(.nav-logo-img) {
-  background:rgba(255,255,255,.93);
-  padding:3px 8px;
-  border-radius:2px;
-  letter-spacing:0;
-  transition:background .3s, padding .3s;
-}
-.nav-logo:hover:has(.nav-logo-img) {
-  background:rgba(255,255,255,1);
-}
+/* Logo image in nav and footer */
 .nav-logo-img {
-  height:44px; width:auto;
-  object-fit:contain;
+  height:44px;
+  width:auto !important;
+  height:44px !important;
+  object-fit:contain !important;
   display:block;
 }
-
-/* Logo in footer */
 .ft-logo-img {
-  height:78px; width:auto;
-  object-fit:contain;
+  height:78px;
+  width:auto !important;
+  height:78px !important;
+  object-fit:contain !important;
   display:block; margin-bottom:1.5rem;
 }
 
@@ -200,9 +197,13 @@ nav.scrolled {
   font-family:var(--f-display);
   font-size:1.25rem; letter-spacing:.42em; color:var(--c-gold); font-weight:400;
   position:absolute; left:50%; transform:translateX(-50%);
-  transition:letter-spacing .4s var(--ease-out);
+  background:rgba(255,255,255,.92);
+  padding:4px 10px;
+  border-radius:2px;
+  line-height:0;
+  transition:background .3s;
 }
-.nav-logo:hover { letter-spacing:.55em; }
+.nav-logo:hover { background:rgba(255,255,255,1); }
 .nav-ico {
   width:18px; height:18px; stroke:var(--c-silver);
   fill:none; stroke-width:1.5; transition:stroke .3s;
