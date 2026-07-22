@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Lookbook — FAMATINA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400;1,600&family=Montserrat:wght@100;200;300;400;500&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── CINEMATIC HERO ── */
+    .lk-hero {
+      height:100vh; min-height:600px; position:relative;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden; text-align:center;
+    }
+    .lk-hero-img { position:absolute; inset:0; }
+    .lk-hero-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%; filter:brightness(.45) saturate(.8); }
+    .lk-overlay { position:absolute; inset:0; background:linear-gradient(180deg,rgba(7,7,7,.15) 0%,rgba(7,7,7,.6) 80%,var(--c-black) 100%); z-index:1; }
+    .lk-content { position:relative; z-index:2; }
+    .lk-season { font-size:.62rem; font-weight:300; letter-spacing:.6em; text-transform:uppercase; color:var(--c-gold); margin-bottom:1.5rem; opacity:0; animation:fadeUp 1s 2.8s var(--ease-out) forwards; }
+    .lk-title { font-family:var(--f-serif); font-size:clamp(4rem,9vw,9rem); font-weight:200; line-height:.85; color:var(--c-white); opacity:0; animation:fadeUp 1.2s 3s var(--ease-out) forwards; }
+    .lk-title em { font-style:italic; color:var(--c-gold); }
+    .lk-sub { font-size:.7rem; font-weight:200; letter-spacing:.25em; text-transform:uppercase; color:var(--c-silver); margin-top:2rem; opacity:0; animation:fadeUp 1s 3.3s var(--ease-out) forwards; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── LOOK INTRO ── */
+    .lk-intro { padding:7rem 3.5rem; background:var(--c-off); display:grid; grid-template-columns:1fr 1fr; gap:8rem; align-items:center; }
+    .lk-intro-text .s-title { margin-bottom:2rem; }
+    .lk-intro-body { font-family:var(--f-serif); font-size:1.05rem; font-weight:300; font-style:italic; line-height:1.85; color:var(--c-silver); }
+    .lk-intro-img { position:relative; aspect-ratio:3/4; overflow:hidden; }
+    .lk-intro-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; filter:brightness(.85) saturate(.9); }
+
+    /* ── MAIN LOOKBOOK GRID ── */
+    .lk-grid-section { padding:6rem 3.5rem; background:var(--c-black); }
+    .lk-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:280px; gap:1rem; margin-bottom:1rem; }
+
+    /* Row 1 */
+    .lk-a { grid-column:span 5; grid-row:span 2; }
+    .lk-b { grid-column:span 4; }
+    .lk-c { grid-column:span 3; }
+    /* Row 2 */
+    .lk-d { grid-column:span 4; }
+    .lk-e { grid-column:span 3; }
+    /* Row 3 */
+    .lk-f { grid-column:span 3; }
+    .lk-g { grid-column:span 5; grid-row:span 2; }
+    .lk-h { grid-column:span 4; }
+    /* Row 4 */
+    .lk-i { grid-column:span 3; }
+    .lk-j { grid-column:span 4; }
+
+    .lk-card { position:relative; overflow:hidden; }
+    .lk-card img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; filter:brightness(.8) saturate(.85); transition:transform .9s var(--ease-out); }
+    .lk-card:hover img { transform:scale(1.07); }
+    .lk-cover {
+      position:absolute; inset:0; z-index:1;
+      background:rgba(7,7,7,0);
+      display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+      padding:1.5rem; transition:background .4s;
+    }
+    .lk-card:hover .lk-cover { background:rgba(7,7,7,.5); }
+    .lk-num {
+      font-family:var(--f-serif); font-size:.9rem; font-weight:200; font-style:italic;
+      letter-spacing:.3em; color:var(--c-white); opacity:0; transition:opacity .35s; margin-bottom:.5rem;
+    }
+    .lk-card-label {
+      font-size:.55rem; font-weight:300; letter-spacing:.4em; text-transform:uppercase;
+      color:var(--c-gold); opacity:0; transition:opacity .35s .05s;
+    }
+    .lk-card:hover .lk-num,
+    .lk-card:hover .lk-card-label { opacity:1; }
+
+    /* ── SEASON STATEMENT ── */
+    .lk-statement {
+      padding:7rem 3.5rem; background:var(--c-off);
+      display:grid; grid-template-columns:1fr 2fr; gap:6rem; align-items:start;
+    }
+    .lk-st-left .s-label { margin-bottom:3rem; }
+    .lk-st-num { font-family:var(--f-serif); font-size:6rem; font-weight:200; color:rgba(200,169,110,.08); line-height:1; }
+    .lk-big-quote { font-family:var(--f-serif); font-size:clamp(1.8rem,3.5vw,3rem); font-weight:200; line-height:1.3; color:var(--c-white); font-style:italic; }
+    .lk-big-quote strong { font-weight:400; color:var(--c-gold); font-style:normal; }
+    .lk-credits { margin-top:3rem; display:flex; flex-direction:column; gap:.75rem; }
+    .lk-credit { display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,.06); padding-bottom:.75rem; }
+    .lk-credit-label { font-size:.58rem; font-weight:300; letter-spacing:.3em; text-transform:uppercase; color:var(--c-gray); }
+    .lk-credit-value { font-size:.68rem; font-weight:200; color:var(--c-silver); }
+
+    /* ── FULL BLEED LOOK ── */
+    .lk-fullbleed { position:relative; height:80vh; overflow:hidden; }
+    .lk-fullbleed img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 15%; filter:brightness(.65) saturate(.85); }
+    .lk-fullbleed-overlay { position:absolute; inset:0; background:linear-gradient(90deg, rgba(7,7,7,.7) 0%, transparent 60%); z-index:1; }
+    .lk-fullbleed-content { position:absolute; top:50%; left:3.5rem; transform:translateY(-50%); z-index:2; }
+    .lk-fullbleed-title { font-family:var(--f-serif); font-size:clamp(3rem,7vw,6rem); font-weight:200; color:var(--c-white); line-height:.9; }
+    .lk-fullbleed-title em { font-style:italic; color:var(--c-gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:1100px) {
+      .lk-grid { grid-template-columns:repeat(6,1fr); grid-auto-rows:220px; }
+      .lk-a { grid-column:span 3; grid-row:span 2; }
+      .lk-b,.lk-c,.lk-d,.lk-e { grid-column:span 3; }
+      .lk-f { grid-column:span 3; }
+      .lk-g { grid-column:span 3; grid-row:span 2; }
+      .lk-h,.lk-i,.lk-j { grid-column:span 3; }
+    }
+    @media (max-width:768px) {
+      .lk-intro,.lk-statement { grid-template-columns:1fr; gap:3rem; padding:4rem 2rem; }
+      .lk-intro-img { display:none; }
+      .lk-grid-section { padding:4rem 1.5rem; }
+      .lk-grid { grid-template-columns:1fr 1fr; grid-auto-rows:200px; }
+      .lk-a,.lk-g { grid-column:span 2; grid-row:span 1; }
+      .lk-b,.lk-c,.lk-d,.lk-e,.lk-f,.lk-h,.lk-i,.lk-j { grid-column:span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="nav">
+  <div class="nav-group left">
+    <a href="colecciones.html" class="nav-link">Colecciones</a>
+    <a href="lookbook.html" class="nav-link active">Lookbook</a>
+    <a href="nosotros.html" class="nav-link">Nosotros</a>
+  </div>
+  <a href="index.html" class="nav-logo">FAMATINA</a>
+  <div class="nav-group">
+    <a href="contacto.html" class="nav-link">Contacto</a>
+    <a href="#" aria-label="Buscar"><svg class="nav-ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.4-4.4"/></svg></a>
+    <a href="#" aria-label="Carrito"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+  </div>
+</nav>
+
+<!-- CINEMATIC HERO -->
+<header class="lk-hero">
+  <div class="lk-hero-img">
+    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1400&h=900&fit=crop&auto=format&q=80" alt="FAMATINA Lookbook">
+  </div>
+  <div class="lk-overlay"></div>
+  <div class="lk-content">
+    <p class="lk-season">Otoño · Invierno · 2025</p>
+    <h1 class="lk-title">Look<em>book</em></h1>
+    <p class="lk-sub">Colección Famatina · La Rioja · Argentina</p>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="lk-intro">
+  <div class="lk-intro-text">
+    <p class="s-label rv">La Colección</p>
+    <h2 class="s-title rv rv-d1">Entre la <em>Montaña</em><br>y la Noche</h2>
+    <p class="lk-intro-body rv rv-d2">Esta temporada, FAMATINA mira hacia las cumbres del Famatina: ese coloso de roca y silencio que guarda los secretos de La Rioja. Nueve looks que transladan esa energía primordial al cuerpo de quien los porta.</p>
+    <a href="colecciones.html" class="btn btn-ghost rv rv-d3" style="display:inline-flex;margin-top:2.5rem;">Comprar la Colección</a>
+  </div>
+  <div class="lk-intro-img rv rv-d2">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=950&fit=crop&auto=format&q=80" alt="Look editorial FAMATINA">
+  </div>
+</section>
+
+<!-- MAIN GRID -->
+<section class="lk-grid-section">
+  <p class="s-label rv" style="margin-bottom:2.5rem;">Los Looks</p>
+  <div class="lk-grid spotlight-grid">
+    <div class="lk-card lk-a rv tilt-card">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=900&fit=crop&auto=format&q=80" alt="Look 01">
+      <div class="lk-cover"><span class="lk-num">Look 01</span><span class="lk-card-label">Nuit Éternelle</span></div>
+    </div>
+    <div class="lk-card lk-b rv rv-d1 tilt-card">
+      <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500&h=400&fit=crop&auto=format&q=80" alt="Look 02">
+      <div class="lk-cover"><span class="lk-num">Look 02</span><span class="lk-card-label">Lumière Dorée</span></div>
+    </div>
+    <div class="lk-card lk-c rv rv-d2 tilt-card">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=400&fit=crop&auto=format&q=80" alt="Look 03">
+      <div class="lk-cover"><span class="lk-num">Look 03</span><span class="lk-card-label">Silhouette</span></div>
+    </div>
+    <div class="lk-card lk-d rv rv-d1 tilt-card">
+      <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&h=400&fit=crop&auto=format&q=80" alt="Look 04">
+      <div class="lk-cover"><span class="lk-num">Look 04</span><span class="lk-card-label">Ombre Nocturne</span></div>
+    </div>
+    <div class="lk-card lk-e rv rv-d2 tilt-card">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&h=400&fit=crop&auto=format&q=80" alt="Look 05">
+      <div class="lk-cover"><span class="lk-num">Look 05</span><span class="lk-card-label">Andina</span></div>
+    </div>
+    <div class="lk-card lk-f rv rv-d1 tilt-card">
+      <img src="https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=400&h=350&fit=crop&auto=format&q=80" alt="Look 06">
+      <div class="lk-cover"><span class="lk-num">Look 06</span><span class="lk-card-label">Velours</span></div>
+    </div>
+    <div class="lk-card lk-g rv rv-d2 tilt-card">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=900&fit=crop&auto=format&q=80" alt="Look 07">
+      <div class="lk-cover"><span class="lk-num">Look 07</span><span class="lk-card-label">Blanche</span></div>
+    </div>
+    <div class="lk-card lk-h rv rv-d3 tilt-card">
+      <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&h=350&fit=crop&auto=format&q=80" alt="Look 08">
+      <div class="lk-cover"><span class="lk-num">Look 08</span><span class="lk-card-label">Ensemble</span></div>
+    </div>
+    <div class="lk-card lk-i rv rv-d1 tilt-card">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=350&fit=crop&auto=format&q=80" alt="Look 09">
+      <div class="lk-cover"><span class="lk-num">Look 09</span><span class="lk-card-label">Dorée</span></div>
+    </div>
+    <div class="lk-card lk-j rv rv-d2 tilt-card">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500&h=350&fit=crop&auto=format&q=80" alt="Look 10">
+      <div class="lk-cover"><span class="lk-num">Look 10</span><span class="lk-card-label">Famatina</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASON STATEMENT -->
+<section class="lk-statement">
+  <div class="lk-st-left">
+    <p class="s-label rv">Fotografía</p>
+    <div class="lk-st-num rv rv-d1" aria-hidden="true">OI</div>
+    <div class="lk-credits rv rv-d2">
+      <div class="lk-credit"><span class="lk-credit-label">Temporada</span><span class="lk-credit-value">Otoño · Invierno 2025</span></div>
+      <div class="lk-credit"><span class="lk-credit-label">Locación</span><span class="lk-credit-value">Sierra del Famatina, La Rioja</span></div>
+      <div class="lk-credit"><span class="lk-credit-label">Dirección Creativa</span><span class="lk-credit-value">FAMATINA Studio</span></div>
+      <div class="lk-credit"><span class="lk-credit-label">Prendas</span><span class="lk-credit-value">Colección Exclusiva 2025</span></div>
+    </div>
+  </div>
+  <div class="rv rv-d2">
+    <blockquote class="lk-big-quote reveal-words">La montaña no se mueve. Y sin embargo, todo a su alrededor <strong>cambia</strong>. Eso es FAMATINA.</blockquote>
+    <a href="colecciones.html" class="btn btn-ghost rv rv-d4" style="display:inline-flex;margin-top:3rem;">Ver Toda la Colección</a>
+  </div>
+</section>
+
+<!-- FULL BLEED -->
+<div class="lk-fullbleed rv">
+  <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&h=800&fit=crop&auto=format&q=80" alt="FAMATINA editorial">
+  <div class="lk-fullbleed-overlay"></div>
+  <div class="lk-fullbleed-content">
+    <h2 class="lk-fullbleed-title rv">La Próxima<br><em>Colección</em></h2>
+    <p class="s-label rv rv-d2" style="margin-top:1.5rem;">Primavera · Verano 2026 — Próximamente</p>
+    <a href="contacto.html" class="btn btn-ghost rv rv-d3" style="display:inline-flex;margin-top:2rem;">Notificarme</a>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-top">
+    <div>
+      <span class="ft-logo">FAMATINA</span>
+      <p class="ft-desc">Haute couture contemporánea desde La Rioja, Argentina.</p>
+    </div>
+    <div>
+      <p class="ft-col-title">Colecciones</p>
+      <div class="ft-links">
+        <a href="colecciones.html" class="ft-link">Ver Todo</a>
+        <a href="colecciones.html" class="ft-link">Novedades</a>
+        <a href="colecciones.html" class="ft-link">Ediciones Limitadas</a>
+      </div>
+    </div>
+    <div>
+      <p class="ft-col-title">FAMATINA</p>
+      <div class="ft-links">
+        <a href="nosotros.html" class="ft-link">Nuestra Historia</a>
+        <a href="lookbook.html" class="ft-link">Lookbook</a>
+        <a href="contacto.html" class="ft-link">Contacto</a>
+      </div>
+    </div>
+    <div>
+      <p class="ft-col-title">Redes</p>
+      <div class="ft-links">
+        <a href="#" class="ft-link">Instagram</a>
+        <a href="#" class="ft-link">Pinterest</a>
+        <a href="#" class="ft-link">TikTok</a>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2025 FAMATINA. Todos los derechos reservados.</p>
+    <div class="ft-socials">
+      <a href="#" class="ft-soc">Instagram</a>
+      <a href="#" class="ft-soc">Pinterest</a>
+      <a href="#" class="ft-soc">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

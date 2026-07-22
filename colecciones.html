@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Colecciones — FAMATINA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400;1,600&family=Montserrat:wght@100;200;300;400;500&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── PAGE HERO ── */
+    .page-hero {
+      height:60vh; min-height:420px; position:relative;
+      display:flex; align-items:flex-end; padding:4rem 3.5rem; overflow:hidden;
+    }
+    .ph-img {
+      position:absolute; inset:0;
+    }
+    .ph-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; filter:brightness(.55) saturate(.85); }
+    .ph-overlay { position:absolute; inset:0; background:linear-gradient(180deg,rgba(7,7,7,.2) 0%,rgba(7,7,7,.75) 100%); z-index:1; }
+    .ph-content { position:relative; z-index:2; }
+    .ph-label { font-size:.62rem; font-weight:300; letter-spacing:.52em; text-transform:uppercase; color:var(--c-gold); margin-bottom:1.2rem; }
+    .ph-title { font-family:var(--f-serif); font-size:clamp(3rem,7vw,6.5rem); font-weight:200; line-height:.9; color:var(--c-white); }
+    .ph-title em { font-style:italic; color:var(--c-gold); }
+
+    /* ── FILTERS ── */
+    .filters-wrap { padding:3rem 3.5rem 0; background:var(--c-off); border-bottom:1px solid rgba(200,169,110,.1); }
+    .filters { display:flex; gap:0; overflow-x:auto; }
+    .filter-btn {
+      font-size:.6rem; font-weight:300; letter-spacing:.35em; text-transform:uppercase;
+      color:var(--c-gray); padding:1.2rem 2rem;
+      border-bottom:2px solid transparent;
+      transition:color .3s, border-color .3s; white-space:nowrap; background:none;
+    }
+    .filter-btn:hover { color:var(--c-white); }
+    .filter-btn.active { color:var(--c-gold); border-bottom-color:var(--c-gold); }
+
+    /* ── PRODUCTS GRID ── */
+    .sec-products { padding:5rem 3.5rem 8rem; background:var(--c-off); }
+    .products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+
+    .product-card { position:relative; }
+    .product-img { aspect-ratio:2/3; overflow:hidden; position:relative; background:var(--c-dark); margin-bottom:1.4rem; }
+    .product-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; filter:brightness(.85) saturate(.9); transition:transform .8s var(--ease-out); }
+    .product-card:hover .product-img img { transform:scale(1.06); }
+    .p-tag { position:absolute; top:1rem; left:1rem; font-size:.55rem; font-weight:300; letter-spacing:.3em; text-transform:uppercase; color:var(--c-black); background:var(--c-gold); padding:.3rem .9rem; z-index:2; }
+    .p-fav {
+      position:absolute; top:1rem; right:1rem; width:36px; height:36px;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(7,7,7,.75); backdrop-filter:blur(4px); border:1px solid rgba(200,169,110,.2);
+      opacity:0; transition:opacity .3s; z-index:2;
+    }
+    .product-card:hover .p-fav { opacity:1; }
+    .p-quick {
+      position:absolute; bottom:0; left:0; right:0; padding:1rem; text-align:center;
+      background:rgba(200,169,110,.92); font-size:.58rem; font-weight:300;
+      letter-spacing:.35em; text-transform:uppercase; color:var(--c-black);
+      transform:translateY(100%); transition:transform .4s var(--ease-out); z-index:2;
+    }
+    .product-card:hover .p-quick { transform:translateY(0); }
+    .p-cat { font-size:.6rem; font-weight:200; letter-spacing:.22em; text-transform:uppercase; color:var(--c-gray); margin-bottom:.4rem; }
+    .p-name { font-family:var(--f-serif); font-size:1.1rem; font-weight:300; color:var(--c-white); margin-bottom:.5rem; }
+    .p-price-row { display:flex; align-items:center; justify-content:space-between; }
+    .p-price { font-size:.72rem; font-weight:300; letter-spacing:.1em; color:var(--c-gold); }
+    .p-sizes { display:flex; gap:.4rem; }
+    .p-size { font-size:.5rem; font-weight:300; letter-spacing:.15em; color:var(--c-gray); border:1px solid rgba(255,255,255,.1); padding:.25rem .5rem; transition:border-color .2s, color .2s; }
+    .p-size:hover { border-color:var(--c-gold); color:var(--c-gold); }
+
+    /* ── FEATURED BANNER ── */
+    .sec-banner { position:relative; height:60vh; overflow:hidden; }
+    .banner-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.5) saturate(.85); }
+    .banner-overlay { position:absolute; inset:0; background:linear-gradient(180deg,transparent 30%,rgba(7,7,7,.9) 100%); z-index:1; }
+    .banner-content {
+      position:absolute; bottom:0; left:0; right:0; padding:4rem 3.5rem; z-index:2;
+      display:flex; justify-content:space-between; align-items:flex-end;
+    }
+    .banner-title { font-family:var(--f-serif); font-size:clamp(2rem,5vw,4.5rem); font-weight:200; color:var(--c-white); }
+    .banner-title em { font-style:italic; color:var(--c-gold); }
+    .banner-sub { font-size:.68rem; font-weight:200; letter-spacing:.2em; color:var(--c-silver); margin-top:.75rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) { .products-grid{grid-template-columns:repeat(2,1fr);} .page-hero{padding:3rem 2rem;} .filters-wrap,.sec-products{padding-left:2rem;padding-right:2rem;} }
+    @media (max-width:600px) { .products-grid{grid-template-columns:1fr;} .filters-wrap,.sec-products{padding-left:1.5rem;padding-right:1.5rem;} }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="nav">
+  <div class="nav-group left">
+    <a href="colecciones.html" class="nav-link active">Colecciones</a>
+    <a href="lookbook.html" class="nav-link">Lookbook</a>
+    <a href="nosotros.html" class="nav-link">Nosotros</a>
+  </div>
+  <a href="index.html" class="nav-logo">FAMATINA</a>
+  <div class="nav-group">
+    <a href="contacto.html" class="nav-link">Contacto</a>
+    <a href="#" aria-label="Buscar"><svg class="nav-ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.4-4.4"/></svg></a>
+    <a href="#" aria-label="Carrito"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="page-hero">
+  <div class="ph-img">
+    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&h=700&fit=crop&auto=format&q=80" alt="FAMATINA Colecciones">
+    <div class="ph-overlay"></div>
+  </div>
+  <div class="ph-content">
+    <p class="ph-label">2025 — 2026</p>
+    <h1 class="ph-title">Nuestras <em>Colecciones</em></h1>
+  </div>
+</header>
+
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterProducts('all',this)">Todo</button>
+    <button class="filter-btn" onclick="filterProducts('vestidos',this)">Vestidos</button>
+    <button class="filter-btn" onclick="filterProducts('blazers',this)">Blazers & Sacos</button>
+    <button class="filter-btn" onclick="filterProducts('pantalones',this)">Pantalones</button>
+    <button class="filter-btn" onclick="filterProducts('faldas',this)">Faldas</button>
+    <button class="filter-btn" onclick="filterProducts('conjuntos',this)">Conjuntos</button>
+    <button class="filter-btn" onclick="filterProducts('accesorios',this)">Accesorios</button>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="sec-products">
+  <div class="products-grid spotlight-grid" id="products-grid">
+
+    <div class="product-card rv rv-d1" data-cat="vestidos">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=750&fit=crop&auto=format&q=80" alt="Robe Nocturne">
+        <span class="p-tag">Nuevo</span>
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Vestidos</p>
+      <h4 class="p-name">Robe Nocturne</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 185.000</span>
+        <div class="p-sizes"><span class="p-size">XS</span><span class="p-size">S</span><span class="p-size">M</span><span class="p-size">L</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d2" data-cat="vestidos">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&h=750&fit=crop&auto=format&q=80" alt="Robe Éternelle">
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Vestidos</p>
+      <h4 class="p-name">Robe Éternelle</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 220.000</span>
+        <div class="p-sizes"><span class="p-size">S</span><span class="p-size">M</span><span class="p-size">L</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d3" data-cat="blazers">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500&h=750&fit=crop&auto=format&q=80" alt="Veste Ombré">
+        <span class="p-tag">Exclusivo</span>
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Blazers</p>
+      <h4 class="p-name">Veste Ombré</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 142.000</span>
+        <div class="p-sizes"><span class="p-size">XS</span><span class="p-size">S</span><span class="p-size">M</span><span class="p-size">L</span><span class="p-size">XL</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d1" data-cat="pantalones">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&h=750&fit=crop&auto=format&q=80" alt="Pantalon Minuit">
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Pantalones</p>
+      <h4 class="p-name">Pantalon Minuit</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 95.000</span>
+        <div class="p-sizes"><span class="p-size">S</span><span class="p-size">M</span><span class="p-size">L</span><span class="p-size">XL</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d2" data-cat="faldas">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500&h=750&fit=crop&auto=format&q=80" alt="Jupe Lumière">
+        <span class="p-tag">Último</span>
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Faldas</p>
+      <h4 class="p-name">Jupe Lumière</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 112.000</span>
+        <div class="p-sizes"><span class="p-size">XS</span><span class="p-size">S</span><span class="p-size">M</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d3" data-cat="conjuntos">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&h=750&fit=crop&auto=format&q=80" alt="Ensemble Dorée">
+        <span class="p-tag">Nuevo</span>
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Conjuntos</p>
+      <h4 class="p-name">Ensemble Dorée</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 278.000</span>
+        <div class="p-sizes"><span class="p-size">S</span><span class="p-size">M</span><span class="p-size">L</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d1" data-cat="vestidos">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=500&h=750&fit=crop&auto=format&q=80" alt="Robe Velours">
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Vestidos</p>
+      <h4 class="p-name">Robe Velours</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 198.000</span>
+        <div class="p-sizes"><span class="p-size">XS</span><span class="p-size">S</span><span class="p-size">M</span><span class="p-size">L</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d2" data-cat="blazers">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500&h=750&fit=crop&auto=format&q=80" alt="Veste Blanche">
+        <span class="p-tag">Edición Limitada</span>
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Blazers</p>
+      <h4 class="p-name">Veste Blanche</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 165.000</span>
+        <div class="p-sizes"><span class="p-size">S</span><span class="p-size">M</span><span class="p-size">L</span></div>
+      </div>
+    </div>
+
+    <div class="product-card rv rv-d3" data-cat="accesorios">
+      <div class="product-img tilt-card">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500&h=750&fit=crop&auto=format&q=80" alt="Écharpe Dorée">
+        <div class="p-fav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="p-quick">Agregar al carrito</div>
+      </div>
+      <p class="p-cat">Accesorios</p>
+      <h4 class="p-name">Écharpe Dorée</h4>
+      <div class="p-price-row">
+        <span class="p-price">$ 65.000</span>
+        <div class="p-sizes"><span class="p-size">Único</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURED BANNER -->
+<div class="sec-banner">
+  <div class="banner-img"><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1400&h=700&fit=crop&auto=format&q=80" alt="FAMATINA Edición Especial"></div>
+  <div class="banner-overlay"></div>
+  <div class="banner-content">
+    <div class="rv">
+      <p class="s-label" style="color:var(--c-gold)">Colección Especial</p>
+      <h2 class="banner-title">Andina <em>Nocturne</em></h2>
+      <p class="banner-sub">Inspirada en la majestuosidad del Famatina. 12 piezas únicas.</p>
+    </div>
+    <a href="#" class="btn btn-gold rv rv-d3">Ver Colección</a>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-top">
+    <div>
+      <span class="ft-logo">FAMATINA</span>
+      <p class="ft-desc">Haute couture contemporánea desde La Rioja, Argentina. La fiereza de los Andes en cada prenda.</p>
+    </div>
+    <div>
+      <p class="ft-col-title">Colecciones</p>
+      <div class="ft-links">
+        <a href="colecciones.html" class="ft-link">Nuit Éternelle</a>
+        <a href="colecciones.html" class="ft-link">Lumière Dorée</a>
+        <a href="colecciones.html" class="ft-link">Silhouette</a>
+        <a href="colecciones.html" class="ft-link">Ediciones Limitadas</a>
+      </div>
+    </div>
+    <div>
+      <p class="ft-col-title">FAMATINA</p>
+      <div class="ft-links">
+        <a href="nosotros.html" class="ft-link">Nuestra Historia</a>
+        <a href="nosotros.html" class="ft-link">Artesanía</a>
+        <a href="lookbook.html" class="ft-link">Lookbook</a>
+        <a href="contacto.html" class="ft-link">Contacto</a>
+      </div>
+    </div>
+    <div>
+      <p class="ft-col-title">Atención</p>
+      <div class="ft-links">
+        <a href="#" class="ft-link">Guía de Tallas</a>
+        <a href="#" class="ft-link">Envíos</a>
+        <a href="#" class="ft-link">Devoluciones</a>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2025 FAMATINA. Todos los derechos reservados.</p>
+    <div class="ft-socials">
+      <a href="#" class="ft-soc">Instagram</a>
+      <a href="#" class="ft-soc">Pinterest</a>
+      <a href="#" class="ft-soc">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+/* Filter products */
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+      setTimeout(() => card.classList.add('in'), 50);
+    } else {
+      card.style.display = 'none';
+      card.classList.remove('in');
+    }
+  });
+}
+</script>
+</body>
+</html>
