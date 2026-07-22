@@ -93,19 +93,27 @@ body::after {
   font-family:var(--f-display);
   font-size:clamp(1.8rem,5vw,3.5rem);
   letter-spacing:.55em; color:var(--c-gold);
-  animation:fadeUp 1.2s var(--ease-out) forwards;
 }
+/* Left-to-right letter reveal */
+.lr-letter {
+  display:inline-block;
+  opacity:0;
+  transform:translateX(-14px);
+  animation:lrReveal .35s var(--ease-out) forwards;
+}
+@keyframes lrReveal { to { opacity:1; transform:translateX(0); } }
+
 .ld-line {
   width:0; height:1px;
   background:linear-gradient(90deg,transparent,var(--c-gold),transparent);
   margin-top:1.2rem;
-  animation:lineGrow 1.6s .4s var(--ease-out) forwards;
+  animation:lineGrow .9s .3s var(--ease-out) forwards;
 }
 .ld-sub {
   font-size:.6rem; font-weight:200; letter-spacing:.55em;
   text-transform:uppercase; color:var(--c-gray);
   margin-top:1rem; opacity:0;
-  animation:fadeUp .8s 1.3s ease forwards;
+  animation:fadeUp .5s .7s ease forwards;
 }
 .ld-bar {
   position:absolute; bottom:2.5rem;
@@ -114,11 +122,43 @@ body::after {
 .ld-bar::after {
   content:''; position:absolute; left:0; top:0; height:100%;
   background:var(--c-gold);
-  animation:barFill 2s .2s var(--ease-out) forwards;
+  animation:barFill 1s .1s var(--ease-out) forwards;
 }
 @keyframes fadeUp   { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
 @keyframes lineGrow { from{width:0} to{width:200px} }
 @keyframes barFill  { from{width:0} to{width:100%} }
+
+/* Hero sol overlay */
+.hero-sol {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  z-index:1; pointer-events:none;
+  opacity:0; transition:opacity 1.4s ease .2s;
+}
+.hero-sol.visible { opacity:1; }
+.hero-sol img {
+  width:min(480px,50vw); height:auto;
+  object-fit:contain;
+  opacity:.18;
+  filter:drop-shadow(0 0 50px rgba(200,169,110,.4));
+}
+
+/* Logo image in nav and footer */
+.nav-logo-img {
+  height:46px; width:auto;
+  object-fit:contain;
+  filter:brightness(0) invert(1);
+  opacity:.88; transition:opacity .3s;
+}
+.nav-logo:hover .nav-logo-img { opacity:1; }
+
+.ft-logo-img {
+  height:68px; width:auto;
+  object-fit:contain;
+  display:block; margin-bottom:1.5rem;
+  filter:brightness(0) invert(1);
+  opacity:.72;
+}
 
 /* ════════════════════════════════
    NAVIGATION

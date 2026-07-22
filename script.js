@@ -38,7 +38,11 @@ if (cursor && cursorR) {
 const loader = document.getElementById('loader');
 if (loader) {
   window.addEventListener('load', () => {
-    setTimeout(() => loader.classList.add('gone'), 2500);
+    setTimeout(() => {
+      loader.classList.add('gone');
+      const heroSol = document.getElementById('hero-sol');
+      if (heroSol) heroSol.classList.add('visible');
+    }, 1200);
   });
 }
 
